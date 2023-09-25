@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="invoice-container" id="div-form">
+            <div class="row">
+                <div class="col">
+                    <h1>Invoice Generator</h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h3>From</h3>
+                    <form id="form-from">
+                        <div class="form-control">
+                            <label for="from-name">Name</label>
+                            <input type="text" id="from-name" name="from-name" placeholder="business name" value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="from-email">Email</label>
+                            <input type="text" id="from-email" name="from-email" placeholder="name@business.com"
+                                value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="from-street">Street</label>
+                            <input type="text" id="from-street" name="from-street" placeholder="business street"
+                                value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="from-city-state">City, State</label>
+                            <input type="text" id="from-city-state" name="from-city-state"
+                                placeholder="business city, state" value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="from-zip-code">Zip Code</label>
+                            <input type="text" id="from-zip-code" name="from-zip-code" placeholder="business zip code"
+                                value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="from-phone">Phone</label>
+                            <input type="text" id="from-phone" name="from-phone" placeholder="business phone" value="">
+                        </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <h3>Bill To</h3>
+                    <form id="form-to">
+                        <div class="form-control">
+                            <label for="to-name">Name</label>
+                            <input type="text" id="to-name" name="to-name" placeholder="client name" value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="to-email">Email</label>
+                            <input type="text" id="to-email" name="to-email" placeholder="name@client.com" value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="to-street">Street</label>
+                            <input type="text" id="to-street" name="to-street" placeholder="client street" value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="to-city-state">City, State</label>
+                            <input type="text" id="to-city-state" name="to-city-state" placeholder="client city, state"
+                                value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="to-zip-code">Zip Code</label>
+                            <input type="text" id="to-zip-code" name="to-zip-code" placeholder="client zip code"
+                                value="">
+                        </div>
+                        <div class="form-control">
+                            <label for="to-phone">Phone</label>
+                            <input type="text" id="to-phone" name="to-phone" placeholder="client phone" value="">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-control">
+                        <label for="invoice-number">Invoice Number</label>
+                        <input type="text" id="invoice-number" name="invoice-number" placeholder="Invoice number"
+                            value="">
+                    </div>
+                    <div class="form-control">
+                        <label for="invoice-date">Invoice Date</label>
+                        <input type="date" id="invoice-date" name="invoice-date" placeholder="Invoice date" value="">
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <table class="table" id="table-form">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Description</th>
+                                <th class="td-rate">Unit Cost</th>
+                                <th class="td-qty">Quantity</th>
+                                <th class="td-amount">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="td-no-border" style="border-bottom: 1px dashed!important"></td>
+                            </tr>
+                            <tr>
+                                <td class="td-no-border td-actions">
+                                    <button title="Add Item" class="btn-add-remove" id="btn-add-item">
+                                        <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </td>
+                                <td colspan="4" class="td-no-border"></td>
+                            </tr>
+                            <tr>
+                                <td class="td-no-border" colspan="3"></td>
+                                <td class="td-no-border">
+                                    <label>Total</label>
+                                </td>
+                                <td class="td-no-border td-amount">
+                                    $<span id="td-total">0.00</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="notes">
+                        <h2>Notes</h2>
+                        <textarea name="invoice-notes" id="invoice-notes" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button class="btn" id="btn-preview">Preview</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-container d-none" id="div-print">
+            <div style="margin-bottom: 3rem">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td class="td-invoice-company">
+                                <ul>
+                                    <li>
+                                        <h1 id="print-from-name"></h1>
+                                    </li>
+                                    <li id="print-from-street"></li>
+                                    <li id="print-from-city-state"></li>
+                                    <li id="print-from-zip-code"></li>
+                                    <li id="print-from-phone"></li>
+                                    <li id="print-from-email"></li>
+                                </ul>
+                            </td>
+                            <td class="td-invoice-info">
+                                <ul>
+                                    <li style="margin-bottom: 0.5rem;">
+                                        <label>INVOICE</label>
+                                        <span id="print-invoice-number"></span>
+                                    </li>
+                                    <li style="margin-bottom: 0.5rem;">
+                                        <label>DATE</label>
+                                        <span id="print-invoice-date"></span>
+                                    </li>
+                                    <li>
+                                        <label>BALANCE DUE</label>
+                                        $<span id="print-balance-due"></span>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <h4>Bill To</h4>
+                                    </li>
+                                    <li>
+                                        <h2 id="print-to-name"></h2>
+                                    </li>
+                                    <li id="print-to-street"></li>
+                                    <li id="print-to-city-state"></li>
+                                    <li id="print-to-zip-code"></li>
+                                    <li id="print-to-phone"></li>
+                                    <li id="print-to-email"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <table class="table" id="table-print">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="td-rate">Rate</th>
+                        <th class="td-qty">Qty</th>
+                        <th class="td-amount">Amount</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <td style="padding-top: 30px; border-bottom: unset;"></td>
+                        <td colspan="2" style="padding-top: 30px;">
+                            <label>Total</label>
+                        </td>
+                        <td class="td-amount" style="padding-top: 30px;">
+                            $<span id="table-print-total">0.00</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="border-bottom: unset; font-size: .8rem;">
+                            <span style="white-space: pre-line;" id="print-invoice-notes">
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div id="div-print-footer">
+                <button class="btn" id="btn-close">Close</button>
+                <button class="btn" id="btn-print">Print</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
