@@ -7,19 +7,25 @@ const btnPreview = document.getElementById('btn-preview');
 const btnPrint = document.getElementById('btn-print');
 const btnClose = document.getElementById('btn-close');
 
-btnAddItem?.addEventListener('click', addItem);
+btnAddItem?.addEventListener('click', () => { addItem() });
 btnPreview?.addEventListener('click', previewInvoice);
 btnPrint?.addEventListener('click', printInvoice);
 btnClose?.addEventListener('click', closePreviewInvoice);
 
-function addItem() {
+let itemId = 0;
+let invoice = {
+    invoiceTotal: 0,
+    items: []
+}
+
+function addItem(description = '', rate = 0, quantity = 0, amount = 0) {
     const tbody = tableForm.getElementsByTagName('tbody')[0];
-    const rowNumber = tbody.rows.length
-    const newRow = tbody.insertRow(rowNumber);
+    const newRow = tbody.insertRow();
+    newRow.id = `tr-item-${itemId}`;
     newRow.innerHTML = `
     <tr>
         <td class="td-no-border td-actions">
-            <button title="Remove Item" class="btn-add-remove" onclick="removeItem(${rowNumber})">
+            <button title="Remove Item" class="btn-add-remove" onclick="removeItem(${itemId})">
                 <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
                     <path fill="currentColor"
                         d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z">
@@ -28,53 +34,68 @@ function addItem() {
             </button>
         </td>
         <td class="td-no-border">
-            <input type="text" id="input-${rowNumber}-description">
+            <input type="text" id="input-${itemId}-description" value="${description}" onkeyup="updateItem(${itemId})">
         </td>
         <td class="td-no-border td-rate">
-            <input type="text" id="input-${rowNumber}-rate" onkeyup="updateAmount(${rowNumber})">
+            <input type="text" id="input-${itemId}-rate" value="${rate}" onkeyup="updateItem(${itemId})">
         </td>
         <td class="td-no-border td-qty">
-            <input type="number" id="input-${rowNumber}-quantity" onChange="updateAmount(${rowNumber})" value="1">
+            <input type="number" id="input-${itemId}-quantity" value="${quantity}" onChange="updateItem(${itemId})" >
         </td>
         <td class="td-no-border td-amount">
-            $<span id="span-${rowNumber}-amount">0</span>
+            $<span id="span-${itemId}-amount">${amount}</span>
         </td>
     </tr>
     `;
+    invoice.items.push({
+        id: itemId,
+        description: description,
+        rate: rate,
+        quantity: quantity,
+        amount: amount
+    });
+    itemId++;
 }
 
-function removeItem(itemPosition) {
-    const tbody = tableForm.getElementsByTagName('tbody')[0];
-    if (tbody.rows.length > 1) {
-        tbody.rows[itemPosition].remove();
+function removeItem(itemId) {
+    if (invoice.items.length > 1) {
+        document.getElementById(`tr-item-${itemId}`).remove();
+        invoice.items = invoice.items.filter(x => x.id != itemId);
         updateTotal();
     }
 }
 
-function updateAmount(id) {
-    const inputRate = document.getElementById(`input-${id}-rate`);
-    const inputQuantity = document.getElementById(`input-${id}-quantity`);
-    const spanAmount = document.getElementById(`span-${id}-amount`);
-    spanAmount.innerText = Number(inputRate.value) * Number(inputQuantity.value);
-    updateTotal()
+function updateItem(itemId) {
+    const description = document.getElementById(`input-${itemId}-description`).value;
+    const rate = Number(document.getElementById(`input-${itemId}-rate`).value);
+    const quantity = Number(document.getElementById(`input-${itemId}-quantity`).value);
+    const amount = rate * quantity;
+
+    setElementValue(`span-${itemId}-amount`, amount);
+    invoice.items[itemId] = {
+        id: itemId,
+        description: description,
+        rate: rate ? rate : 0,
+        quantity: quantity ? quantity : 0,
+        amount: amount ? amount : 0
+    };
+
+    updateTotal();
 }
 
 function updateTotal() {
-    const tbody = tableForm.getElementsByTagName('tbody')[0];
+    const total = invoice.items.reduce((acc, obj) => {
+        return acc + obj.amount
+    }, 0);
 
-    let total = 0;
-    Array.from(tbody.rows).forEach((row) => {
-        total = total + Number(row.lastElementChild.lastElementChild.textContent)
-    })
-
-    const tdTotal = document.getElementById('td-total');
-    tdTotal.innerText = total
+    setElementValue(`td-total`, total);
+    invoice.invoiceTotal = total;
 }
 
 function previewInvoice() {
     divForm.classList.toggle('d-none');
     divPrint.classList.toggle('d-none');
-    prepareInvoicePreview()
+    prepareInvoicePreview();
 }
 
 function closePreviewInvoice() {
@@ -83,60 +104,58 @@ function closePreviewInvoice() {
 }
 
 function printInvoice() {
-    window.print()
+    window.print();
+}
+
+function getDataFromForm(formId) {
+    const form = document.getElementById(formId);
+    const data = new FormData(form);
+    return Object.fromEntries(data.entries());
 }
 
 function prepareInvoicePreview() {
-    const arrayFormFrom = Array.from(document.getElementById('form-from'));
-    const arrayFormTo = Array.from(document.getElementById('form-to'));
-    const mergedArrays = [...arrayFormFrom, ...arrayFormTo];
-    mergedArrays.forEach(el => {
-        setElementValue(`print-${el.id}`, el.value);
+    invoice.business = getDataFromForm('form-business');
+    invoice.client = getDataFromForm('form-client');
+    invoice.invoiceNumber = document.getElementById('invoiceNumber').value;
+    invoice.invoiceDate = document.getElementById('invoiceDate').value;
+    invoice.invoiceNotes = document.getElementById('invoice-notes').value;
+
+    setElementValue('print-invoiceNumber', invoice.invoiceNumber);
+    setElementValue('print-invoiceDate', formatDate(invoice.invoiceDate));
+    setElementValue('print-invoiceTotal', invoice.invoiceTotal);
+    setElementValue('print-table-total', invoice.invoiceTotal);
+    setElementValue('print-invoice-notes', invoice.invoiceNotes);
+
+    Object.keys(invoice.business).forEach((key) => {
+        setElementValue(`print-${key}`, invoice.business[key]);
     });
 
-    const invoiceNumber = document.getElementById('invoice-number');
-    setElementValue('print-invoice-number', invoiceNumber.value);
+    Object.keys(invoice.client).forEach((key) => {
+        setElementValue(`print-${key}`, invoice.client[key]);
+    });
 
-    const invoiceDate = document.getElementById('invoice-date');
-    setElementValue('print-invoice-date', formatDate(invoiceDate.value));
-
-    const invoiceNotes = document.getElementById('invoice-notes');
-    setElementValue('print-invoice-notes', invoiceNotes.value);
-
-    const tdTotal = document.getElementById('td-total');
-    setElementValue('print-balance-due', tdTotal.innerText);
-    setElementValue('table-print-total', tdTotal.innerText);
-
-    let rowNumber = 0;
-    const tbodyRows = Array.from(tableForm.getElementsByTagName('tbody')[0].rows);
     const tablePrint = document.getElementById('table-print').getElementsByTagName('tbody')[0];
     tablePrint.innerHTML = '';
+    let htmlRows = '';
 
-    tbodyRows.forEach((row) => {
-        const newRow = tablePrint.insertRow(rowNumber);
-        const description = row.children[1].children[0].value;
-        const rate = row.children[2].children[0].value;
-        const qty = row.children[3].children[0].value;
-        const amount = row.children[4].children[0].innerHTML
-
-        newRow.innerHTML = `
-        <tr>
-            <td>${description}</td>
-            <td class="td-rate">$${rate}</td>
-            <td class="td-qty">${qty}</td>
-            <td class="td-amount">$${amount}</td>
-        </tr>`;
-        rowNumber++;
+    invoice.items.forEach(item => {
+        htmlRows = htmlRows + `
+            <tr>
+                <td>${item.description}</td>
+                <td class="td-rate">$${item.rate}</td>
+                <td class="td-qty">${item.quantity}</td>
+                <td class="td-amount">$${item.amount}</td>
+            </tr>
+        `;
     });
+    tablePrint.innerHTML = htmlRows;
+    sessionStorage.setItem('invoice', JSON.stringify(invoice));
 }
 
 function setElementValue(elementName, elementValue = '') {
-    const element = document.getElementById(elementName)
-    element.innerText = elementValue
-}
-
-function cleanPrintInvoice() {
-    setElementValue('from-name', true)
+    const element = document.getElementById(elementName);
+    if (element)
+        element.innerText = elementValue;
 }
 
 function formatDate(stringDate) {
@@ -151,13 +170,48 @@ function formatDate(stringDate) {
 
 function isValidDate(date) {
     if (Object.prototype.toString.call(date) === "[object Date]")
-        return !isNaN(date.getTime())
-    else return false
+        return !isNaN(date.getTime());
+    else return false;
 }
 
-function init(){
-    addItem();
+function generateInvoiceDateAndNumber() {
+    let today = new Date();
+    let invoiceNumber = `INV${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`
+    invoice.invoiceNumber = invoiceNumber;
+    invoice.date = today;
+    document.getElementById('invoiceNumber').value = invoiceNumber;
+    document.getElementById('invoiceDate').value = today.toISOString().split('T')[0];
 }
 
+function loadFromMemory(inoiceMemo) {
+    invoice = JSON.parse(inoiceMemo);
+    Object.keys(invoice.business).forEach((key) => {
+        document.getElementById(key).value = invoice.business[key]
+    });
+
+    Object.keys(invoice.client).forEach((key) => {
+        document.getElementById(key).value = invoice.client[key]
+    });
+
+    invoiceItems = invoice.items;
+    invoice.items = [];
+    invoiceItems.forEach(item => {
+        addItem(item.description, item.rate, item.quantity, item.amount);
+        updateItem(item.id)
+    })
+    document.getElementById('invoice-notes').value = invoice.invoiceNotes;
+    generateInvoiceDateAndNumber();
+}
+
+function init() {
+    const inoiceMemo = sessionStorage.getItem('invoice')
+    if (inoiceMemo) {
+        loadFromMemory(inoiceMemo)
+
+    } else {
+        generateInvoiceDateAndNumber();
+        addItem();
+    }
+}
 
 init();

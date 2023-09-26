@@ -18,68 +18,66 @@
                     <hr>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col">
                     <h3>From</h3>
-                    <form id="form-from">
+                    <form id="form-business">
                         <div class="form-control">
-                            <label for="from-name">Name</label>
-                            <input type="text" id="from-name" name="from-name" placeholder="business name" value="">
+                            <label for="businessName">Name</label>
+                            <input type="text" name="businessName" id="businessName" placeholder="business name">
                         </div>
                         <div class="form-control">
-                            <label for="from-email">Email</label>
-                            <input type="text" id="from-email" name="from-email" placeholder="name@business.com"
-                                value="">
+                            <label for="businessEmail">Email</label>
+                            <input type="text" name="businessEmail" id="businessEmail" placeholder="name@business.com">
                         </div>
                         <div class="form-control">
-                            <label for="from-street">Street</label>
-                            <input type="text" id="from-street" name="from-street" placeholder="business street"
-                                value="">
+                            <label for="businessStreet">Street</label>
+                            <input type="text" name="businessStreet" id="businessStreet" placeholder="business street">
                         </div>
                         <div class="form-control">
-                            <label for="from-city-state">City, State</label>
-                            <input type="text" id="from-city-state" name="from-city-state"
-                                placeholder="business city, state" value="">
+                            <label for="businessCityState">City, State</label>
+                            <input type="text" name="businessCityState" id="businessCityState"
+                                placeholder="business city, state">
                         </div>
                         <div class="form-control">
-                            <label for="from-zip-code">Zip Code</label>
-                            <input type="text" id="from-zip-code" name="from-zip-code" placeholder="business zip code"
-                                value="">
+                            <label for="businessZipCode">Zip Code</label>
+                            <input type="text" name="businessZipCode" id="businessZipCode"
+                                placeholder="business zip code">
                         </div>
                         <div class="form-control">
-                            <label for="from-phone">Phone</label>
-                            <input type="text" id="from-phone" name="from-phone" placeholder="business phone" value="">
+                            <label for="businessPhone">Phone</label>
+                            <input type="text" name="businessPhone" id="businessPhone" placeholder="business phone">
                         </div>
                     </form>
                 </div>
                 <div class="col">
                     <h3>Bill To</h3>
-                    <form id="form-to">
+                    <form id="form-client">
                         <div class="form-control">
-                            <label for="to-name">Name</label>
-                            <input type="text" id="to-name" name="to-name" placeholder="client name" value="">
+                            <label for="clientName">Name</label>
+                            <input type="text" name="clientName" id="clientName" placeholder="client name">
                         </div>
                         <div class="form-control">
-                            <label for="to-email">Email</label>
-                            <input type="text" id="to-email" name="to-email" placeholder="name@client.com" value="">
+                            <label for="clientEmail">Email</label>
+                            <input type="text" name="clientEmail" id="clientEmail" placeholder="name@client.com">
                         </div>
                         <div class="form-control">
-                            <label for="to-street">Street</label>
-                            <input type="text" id="to-street" name="to-street" placeholder="client street" value="">
+                            <label for="clientStreet">Street</label>
+                            <input type="text" name="clientStreet" id="clientStreet" placeholder="client street">
                         </div>
                         <div class="form-control">
-                            <label for="to-city-state">City, State</label>
-                            <input type="text" id="to-city-state" name="to-city-state" placeholder="client city, state"
-                                value="">
+                            <label for="clientCityState">City, State</label>
+                            <input type="text" name="clientCityState" id="clientCityState"
+                                placeholder="client city, state">
                         </div>
                         <div class="form-control">
-                            <label for="to-zip-code">Zip Code</label>
-                            <input type="text" id="to-zip-code" name="to-zip-code" placeholder="client zip code"
-                                value="">
+                            <label for="clientZipCode">Zip Code</label>
+                            <input type="text" name="clientZipCode" id="clientZipCode" placeholder="client zip code">
                         </div>
                         <div class="form-control">
-                            <label for="to-phone">Phone</label>
-                            <input type="text" id="to-phone" name="to-phone" placeholder="client phone" value="">
+                            <label for="clientPhone">Phone</label>
+                            <input type="text" name="clientPhone" id="clientPhone" placeholder="client phone">
                         </div>
                     </form>
                 </div>
@@ -87,20 +85,14 @@
 
             <div class="row">
                 <div class="col">
-                    <hr>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
                     <div class="form-control">
-                        <label for="invoice-number">Invoice Number</label>
-                        <input type="text" id="invoice-number" name="invoice-number" placeholder="Invoice number"
+                        <label for="invoiceNumber">Invoice Number</label>
+                        <input type="text" id="invoiceNumber" name="invoiceNumber" placeholder="Invoice number"
                             value="">
                     </div>
                     <div class="form-control">
-                        <label for="invoice-date">Invoice Date</label>
-                        <input type="date" id="invoice-date" name="invoice-date" placeholder="Invoice date" value="">
+                        <label for="invoiceDate">Invoice Date</label>
+                        <input type="date" id="invoiceDate" name="invoiceDate" placeholder="Invoice date">
                     </div>
                 </div>
                 <div class="col"></div>
@@ -119,12 +111,9 @@
                             </tr>
                         </thead>
                         <tbody></tbody>
-                        <tbody>
+                        <tfoot>
                             <tr>
-                                <td colspan="5" class="td-no-border" style="border-bottom: 1px dashed!important"></td>
-                            </tr>
-                            <tr>
-                                <td class="td-no-border td-actions">
+                                <td class="td-actions" colspan="5">
                                     <button title="Add Item" class="btn-add-remove" id="btn-add-item">
                                         <svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                             <path fill="currentColor"
@@ -133,18 +122,17 @@
                                         </svg>
                                     </button>
                                 </td>
-                                <td colspan="4" class="td-no-border"></td>
                             </tr>
                             <tr>
-                                <td class="td-no-border" colspan="3"></td>
-                                <td class="td-no-border">
+                                <td colspan="3"></td>
+                                <td>
                                     <label>Total</label>
                                 </td>
-                                <td class="td-no-border td-amount">
+                                <td class="td-amount">
                                     $<span id="td-total">0.00</span>
                                 </td>
                             </tr>
-                        </tbody>
+                        </tfoot>
                     </table>
                     <div class="notes">
                         <h2>Notes</h2>
@@ -155,7 +143,7 @@
 
             <div class="row">
                 <div class="col">
-                    <button class="btn" id="btn-preview">Preview</button>
+                    <button class="btn" id="btn-preview">Save/Preview</button>
                 </div>
             </div>
         </div>
@@ -168,28 +156,28 @@
                             <td class="td-invoice-company">
                                 <ul>
                                     <li>
-                                        <h1 id="print-from-name"></h1>
+                                        <h1 id="print-businessName"></h1>
                                     </li>
-                                    <li id="print-from-street"></li>
-                                    <li id="print-from-city-state"></li>
-                                    <li id="print-from-zip-code"></li>
-                                    <li id="print-from-phone"></li>
-                                    <li id="print-from-email"></li>
+                                    <li id="print-businessStreet"></li>
+                                    <li id="print-businessCityState"></li>
+                                    <li id="print-businessZipCode"></li>
+                                    <li id="print-businessPhone"></li>
+                                    <li id="print-businessEmail"></li>
                                 </ul>
                             </td>
                             <td class="td-invoice-info">
                                 <ul>
                                     <li style="margin-bottom: 0.5rem;">
                                         <label>INVOICE</label>
-                                        <span id="print-invoice-number"></span>
+                                        <span id="print-invoiceNumber"></span>
                                     </li>
                                     <li style="margin-bottom: 0.5rem;">
                                         <label>DATE</label>
-                                        <span id="print-invoice-date"></span>
+                                        <span id="print-invoiceDate"></span>
                                     </li>
                                     <li>
                                         <label>BALANCE DUE</label>
-                                        $<span id="print-balance-due"></span>
+                                        $<span id="print-invoiceTotal"></span>
                                     </li>
                                 </ul>
                             </td>
@@ -206,13 +194,13 @@
                                         <h4>Bill To</h4>
                                     </li>
                                     <li>
-                                        <h2 id="print-to-name"></h2>
+                                        <h2 id="print-clientName"></h2>
                                     </li>
-                                    <li id="print-to-street"></li>
-                                    <li id="print-to-city-state"></li>
-                                    <li id="print-to-zip-code"></li>
-                                    <li id="print-to-phone"></li>
-                                    <li id="print-to-email"></li>
+                                    <li id="print-clientStreet"></li>
+                                    <li id="print-clientCityState"></li>
+                                    <li id="print-clientZipCode"></li>
+                                    <li id="print-clientPhone"></li>
+                                    <li id="print-clientEmail"></li>
                                 </ul>
                             </td>
                         </tr>
@@ -237,7 +225,7 @@
                             <label>Total</label>
                         </td>
                         <td class="td-amount" style="padding-top: 30px;">
-                            $<span id="table-print-total">0.00</span>
+                            $<span id="print-table-total">0.00</span>
                         </td>
                     </tr>
                     <tr>
