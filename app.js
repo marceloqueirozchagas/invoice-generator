@@ -39,7 +39,7 @@ function addItem(description = '', rate = 0, quantity = 0, amount = 0) {
         <td class="td-no-border td-rate">
             <input type="text" id="input-${itemId}-rate" value="${rate}" onkeyup="updateItem(${itemId})">
         </td>
-        <td class="td-no-border td-qty">
+        <td class="td-no-border td-quantity">
             <input type="number" id="input-${itemId}-quantity" value="${quantity}" onChange="updateItem(${itemId})" >
         </td>
         <td class="td-no-border td-amount">
@@ -143,13 +143,13 @@ function prepareInvoicePreview() {
             <tr>
                 <td>${item.description}</td>
                 <td class="td-rate">$${item.rate}</td>
-                <td class="td-qty">${item.quantity}</td>
+                <td class="td-quantity">${item.quantity}</td>
                 <td class="td-amount">$${item.amount}</td>
             </tr>
         `;
     });
     tablePrint.innerHTML = htmlRows;
-    sessionStorage.setItem('invoice', JSON.stringify(invoice));
+    localStorage.setItem('invoice', JSON.stringify(invoice));
 }
 
 function setElementValue(elementName, elementValue = '') {
@@ -204,7 +204,7 @@ function loadFromMemory(inoiceMemo) {
 }
 
 function init() {
-    const inoiceMemo = sessionStorage.getItem('invoice')
+    const inoiceMemo = localStorage.getItem('invoice')
     if (inoiceMemo) {
         loadFromMemory(inoiceMemo)
 

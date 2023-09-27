@@ -1,8 +1,6 @@
 body {
   color: #555;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell,
-    Noto Sans, sans-serif, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans,
-    sans-serif, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+  font-family: Roboto, sans-serif, Helvetica, Arial;
 }
 
 h1 {
@@ -116,7 +114,7 @@ textarea:focus {
 }
 
 .td-rate,
-.td-qty {
+.td-quantity {
   width: 100px;
 }
 
@@ -147,6 +145,7 @@ ul {
 .td-invoice-info {
   width: 30%;
   vertical-align: top;
+  text-align: right;
 }
 
 .td-invoice-info label {
@@ -222,6 +221,7 @@ ul {
   }
   body {
     margin: 1cm;
+    font-size: 0.8rem;
   }
   .invoice-container {
     background-color: transparent;
@@ -232,5 +232,21 @@ ul {
   }
   #div-print-footer {
     display: none;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    line-height: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
+  
+  h4 {
+    font-size: 1rem;
+    line-height: 1rem;
   }
 }
